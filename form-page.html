@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="CSS/style.css" rel="stylesheet">
+	<link href="fontawesome/css/all.css" rel="stylesheet">
+	<title>Contact Us</title>
+</head>
+
+<body>
+    <header id="mainHeader"  class="main-header">
+        <div class="container no-overflow">
+            <div class="container-1">
+                <a href="index.html">
+                    <div class="logo">
+                        <img src="Img/TEST.png" alt="logo">
+                    </div>
+                </a>
+                <div class="buy-search-like-menu">
+                    <ul>
+                        <li class="my-purchases"><a data-click-add-class-to="show purchases-bucket" href="#">My purchases<div>999+</div></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search">
+                <input class="" id='mainSearch' type="text">
+                <i class="fas fa-search"></i>
+                <div id="searchResult" class="search-result">
+                    <div class="result">
+                        <a href="items-list.html">
+                          <p data-marker="value"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Navigation1</a></li>
+                    <li><a href="#">Navigation2</a></li>
+                    <li><a href="#">Navigation3</a></li>
+                    <li><a href="form-page.html">Navigation4</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-container">
+				<div class="toggle-menu">
+					<input data-click-toggle-class-at-this-position="show-menu [data-toggle-here]" type="checkbox" name="open-close-mobile-menu" id="open-close-mob-menu">
+					<label for="open-close-mob-menu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</label>
+				</div>
+				<nav data-toggle-here class="main-mobile-nav">
+					<ul>
+						<li><a href="index.html">Navigation1</a></li>
+						<li><a href="#">Navigation2</a></li>
+						<li><a href="#">Navigation3</a></li>
+						<li><a href="form-page.html">Navigation4</a></li>
+					</ul>
+				</nav>
+			</div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <form class="contact-us-form">
+                <div class="flex-container">
+                    <input class="first-name" type="text" placeholder="First Name" name="firstName" required>
+                    <input class="last-name" type="text" placeholder="Last Name" name="lastName" required>
+                </div>
+                <input type="email" placeholder="Your e-mail" name="email" required>
+                <textarea name="textarea" cols="30" rows="10" placeholder="Your topic"></textarea>
+                <input type="submit" value="send">
+            </form>
+        </div>
+        <div class="empty-filler"></div>
+        <div class="purchases-bucket">
+			<div class="close">
+				<button data-click-remove-class-from="show purchases-bucket">
+					<span class="xmark-container">
+						<span class="xmark-part-1"></span>
+						<span class="xmark-part-2"></span>
+					</span>
+				</button>
+			</div>
+			<div class="container">
+				<div data-delete-marker class="item">
+					<div class="item-container">
+						<div class="img-container">
+                            <img data-template-field='img' src="Img/1-pexels-photo-6373308.jpeg" alt='Item Img' class="item-img">
+                        </div>
+                        <div class="info-container">
+                            <div data-template-field='item-name' class="item-name"><p>Item Name</p></div>
+                            <div class="number-of-items">
+                                <div class="container">
+                                    <button data-click-value-minus='1 m-f-js-value-field' class="minus">-</button>
+                                    <input class='m-f-js-value-field' type="number" min="1"	value="1">
+                                    <button data-click-value-plus='1 m-f-js-value-field' class="plus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button data-click-delete class="remove">Delete</button>
+                        </div>
+					</div>
+                    <div class="price">
+                        <p>price: <span>9999$</span></p>
+                    </div>
+				</div>
+                <div data-delete-marker class="item">
+					<div class="item-container">
+						<div class="img-container">
+                            <img data-template-field='img' src="Img/1-pexels-photo-6373308.jpeg" alt='Item Img' class="item-img">
+                        </div>
+                        <div class="info-container">
+                            <div data-template-field='item-name' class="item-name"><p>Item Name</p></div>
+                            <div class="number-of-items">
+                                <div class="container">
+                                    <button data-click-value-minus='1 m-f-js-value-field' class="minus">-</button>
+                                    <input class='m-f-js-value-field' type="number" min="1"	value="1">
+                                    <button data-click-value-plus='1 m-f-js-value-field' class="plus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button data-click-delete class="remove">Delete</button>
+                        </div>
+					</div>
+                    <div class="price">
+                        <p>price: <span>9999$</span></p>
+                    </div>
+				</div>
+                <button class="buy-this-item buy-all">TOTAL PRICE <span>9999</span><span>$</span> --- BUY ALL</button>
+			</div>
+            
+		</div>
+        <div id="backToTop" class="back-home-container fade negative-z-index">
+            <button id="backToTopButton" class="back-home"><i class="fas fa-arrow-up"></i></button>
+        </div>
+    </main>
+    <footer class="main-footer">
+	</footer>
+    <script src="JS/script.js"></script>
+</body>
+</html>
