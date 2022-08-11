@@ -1282,6 +1282,7 @@ div.show{
 	}
 
 	.contact-us-form{
+		width: 90%;
 		margin: 0 5%;
 		margin-bottom: 80px;
 	}
