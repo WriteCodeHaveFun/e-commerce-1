@@ -1,3 +1,8 @@
+:root{
+	--hover-bg-color: #e8e8e8;
+	--main-bg-color: #efefef;
+}
+
 *{
 	padding: 0;
 	margin: 0;
@@ -9,7 +14,7 @@ html, body{
 	padding: 0;
 	margin: 0;
 	color: rgb(3, 0, 48);
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	font-family: sans-serif;
 }
 
@@ -29,6 +34,10 @@ a{
 	display: block;
 	text-decoration: none;
 	color: inherit;
+}
+
+button{
+	background-color: var(--main-bg-color);
 }
 
 img{
@@ -66,7 +75,7 @@ ul.groups-links a, ul.groups-links a img{
 }
 
 ul.groups-links a:hover{
-	background-color: #e8e8e8;
+	background-color: var(--hover-bg-color);
 }
 
 ul.groups-links a:hover img{
@@ -92,7 +101,7 @@ button.see-group{
     width: 50%;
     height: 25%;
 	color:#313131;
-    background-color: #efefef;
+    background-color: var(--main-bg-color);
     top: 0;
     left: 0;
 	border: none;
@@ -121,7 +130,7 @@ div.logo{
 	height: 40px;
 	float: left;
 	border-radius: 3px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
 				5px 5px 5px rgb(69 69 69 / 12%);
 }
@@ -162,7 +171,7 @@ div.buy-search-like-menu a{
 
 .purchases-bucket .item{
 	padding: 20px;
-    background-color: #efefef;
+    background-color: var(--main-bg-color);
     margin-bottom: 10px;
 	max-width: 934px;
     margin-left: auto;
@@ -207,7 +216,7 @@ div.buy-search-like-menu a{
     padding: 10px;
     max-width: 720px;
     border-radius: 10px;
-    background-color: #efefef;
+    background-color: var(--main-bg-color);
 }
 
 .purchases-bucket .container input {
@@ -217,7 +226,7 @@ div.buy-search-like-menu a{
     margin: 0 12px;
     border: none;
     border-radius: 15px;
-    background-color: #efefef;
+    background-color: var(--main-bg-color);
     box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), inset 5px 5px 5px rgb(69 69 69 / 12%);
 }
 
@@ -290,9 +299,9 @@ div.search input{
 	height: 30px;
 	font-size: 16px;
 	padding-left: 40px;
-	border: 4px solid #efefef;
+	border: 4px solid var(--main-bg-color);
 	border-radius: 15px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
 				5px 5px 5px rgb(69 69 69 / 12%);
 }
@@ -495,7 +504,7 @@ div.goods-list-container{
 
 nav.goods-list{
 	margin: 3px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	padding: 5px;
 }
 
@@ -521,7 +530,7 @@ nav.goods-list ul ul.zero-height.remove-zero-height{
 }
 
 nav.goods-list li{
-	border-bottom: 1px solid #efefef;
+	border-bottom: 1px solid var(--main-bg-color);
 	margin-bottom: 5px;
 }
 
@@ -600,7 +609,7 @@ div.min input, div.max input{
 	padding-left: 10px;
 	border: none;
 	border-radius: 15px;
-    background-color: #efefef;
+    background-color: var(--main-bg-color);
     box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
 	inset 5px 5px 5px rgb(69 69 69 / 12%);
 }
@@ -656,7 +665,7 @@ div.items-area{
 	float: left;
 	overflow: hidden;
 	text-align: center;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	border-radius: 15px;
 	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
 }
@@ -685,7 +694,7 @@ div.items-area{
     cursor: pointer;
     border: none;
     border-radius: 3px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
@@ -729,7 +738,7 @@ div.item-info{
 }
 
 .total-price{
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
     padding: 20px;
     font-size: 1.5em;
 	border-radius: 10px;
@@ -780,7 +789,7 @@ div.recommendations div.container{
 	min-height: 200px;
 	margin: 3px;
 	text-align: center;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	border-radius: 10px;
 }
 
@@ -851,7 +860,7 @@ div.buy-search-like-menu a:hover,
 button.apply:hover,
 .back-home:hover,
 .subgroup-filter:hover{
-	background-color:#e8e8e8;
+	background-color: var(--hover-bg-color);
 }
 
 .buy-this-item, 
@@ -884,7 +893,7 @@ div.buy-window div.container{
 	min-width: 540px;
 	max-width: 720px;
 	border-radius: 10px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 }
 
 div.buy-window div.item-container{
@@ -921,7 +930,7 @@ div.buy-menu div.container input{
 	margin: 0 12px;
 	border: none;
 	border-radius: 15px;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
 				inset 5px 5px 5px rgb(69 69 69 / 12%);
 }
@@ -953,7 +962,7 @@ button.minus{
 }
 
 button.plus:hover, button.minus:hover, button.remove:hover{
-	background-color: #e8e8e8;
+	background-color: var(--hover-bg-color);
 }
 
 button.plus:active, button.minus:active, button.remove:active{
@@ -973,13 +982,13 @@ div.close button{
 	border: none;
 	border-radius: 20px;
 	cursor: pointer;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	color: inherit;
 	transition: 0.3s all;
 }
 
 div.close button:hover{
-	background-color:#e8e8e8;
+	background-color: var(--hover-bg-color);
 	transform: rotate(90deg);
 }
 
@@ -1082,10 +1091,10 @@ div.no-overflow{
 
 .contact-us-form input, .contact-us-form textarea{
 	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), inset 5px 5px 5px rgb(69 69 69 / 12%);
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
 	padding: 10px 15px;
 	margin: 15px 0;
-	border: 1px solid #efefef;
+	border: 1px solid var(--main-bg-color);
 	border-radius: 15px;
 	width: 100%;
 	transition: all 0.3s;
@@ -1137,7 +1146,7 @@ div.no-overflow{
 
 .contact-us-form input[type=submit]:hover{
 	border: none;
-	background-color: #e8e8e8;
+	background-color: var(--hover-bg-color);
 }
 
 .contact-us-form input[type=submit]:active{
@@ -1151,7 +1160,7 @@ div.no-overflow{
     bottom: 20px;
     right: 10px;
 	line-height: 0;
-	background-color: #efefef;
+	background-color: var(--main-bg-color);
     padding: 3px;
     border-radius: 10px;
 	transition: opacity 1s;
@@ -1225,7 +1234,7 @@ div.show{
 		position: absolute;
 		transition: all 0.3s;
 		z-index: 999;
-		background-color: #efefef;
+		background-color: var(--main-bg-color);
 		width: 226px;
 		transform: translateX(-226px);
 		
