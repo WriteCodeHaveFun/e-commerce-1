@@ -531,16 +531,16 @@ nav.goods-list ul.group>li{
 	width: 139px;
 }
 
-nav.goods-list ul ul{
+.subgroup{
 	transition: 0.3s height;
 }
 
-nav.goods-list ul ul.zero-height{
+.subgroup.zero-height{
 	height: 0;
 	overflow: hidden;
 }
 
-nav.goods-list ul ul.zero-height.remove-zero-height{
+.subgroup.remove-zero-height{
 	height: 121px;
 }
 
@@ -563,13 +563,13 @@ nav.goods-list a{
 				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
-nav.goods-list ul.subgroup a{
+/* nav.goods-list ul.subgroup a{
 	font-size: 0.8em;
     padding: 5px;
     margin: 5px 8px;
 	font-weight: 500;
     text-transform: none;
-}
+} */
 
 .subgroup-filter{
 	display: block;
