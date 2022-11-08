@@ -1,6 +1,15 @@
 :root{
 	--hover-bg-color: #e8e8e8;
 	--main-bg-color: #efefef;
+	--lightPart-boxShadow-color: rgb(255 255 255 / 55%); /* 255 255 255 / 55% */
+	--darkPart-boxShadow-color: rgb(69 69 69 / 12%); /* 69 69 69 / 12% */
+	--main-font-color:  rgb(3, 0, 48);
+	--modal-bg-color: #000000ad;
+	--search-results-bg-color: #f6f6f6;
+	--search-result-hover-bg-color: white;
+	--formElement-hover-border-color: #00adff69;
+	--formElement-focus-bg-color: #fefefe69;
+	--footer-bg-color: #dcdcdc;
 }
 
 *{
@@ -13,7 +22,7 @@
 html, body{
 	padding: 0;
 	margin: 0;
-	color: rgb(3, 0, 48);
+	color: var(--main-font-color);
 	background-color: var(--main-bg-color);
 	font-family: sans-serif;
 }
@@ -67,7 +76,7 @@ ul.groups-links li{
 	width: calc(50% - 20px);
 	margin: 10px;
     border-radius: 15px;
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 } 
 
 ul.groups-links a, ul.groups-links a img{
@@ -100,7 +109,7 @@ button.see-group{
 	cursor: pointer;
     width: 50%;
     height: 25%;
-	color:#313131;
+	color: var(--main-font-color);
     background-color: var(--main-bg-color);
     top: 0;
     left: 0;
@@ -131,8 +140,8 @@ div.logo{
 	float: left;
 	border-radius: 3px;
 	background-color: var(--main-bg-color);
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.buy-search-like-menu{
@@ -149,10 +158,10 @@ div.buy-search-like-menu a{
 	margin-right: 5%;
 	padding: 4px 9px;
 	border-radius: 5px;
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
-.purchases-bucket{
+.purchases-basket-background-layer{
 	display: none;
 	position: fixed;
     z-index: 1000;
@@ -160,16 +169,16 @@ div.buy-search-like-menu a{
     height: 100%;
     top: 0;
     left: 0;
-    background-color: #000000ad;
+    background-color: var(--modal-bg-color);
 }
 
-.purchases-bucket .container{
+.purchases-basket-background-layer .container{
 	margin: 45px;
 	height: calc(100vh - 90px);
 	overflow-y: unset;
 }
 
-.purchases-bucket .item{
+.purchases-basket-background-layer .item{
 	padding: 20px;
     background-color: var(--main-bg-color);
     margin-bottom: 10px;
@@ -179,7 +188,7 @@ div.buy-search-like-menu a{
 	border-radius: 10px;
 }
 
-.purchases-bucket .item-container{
+.purchases-basket-background-layer .item-container{
 	width: 100%;
 	float: none;
 	display: flex;
@@ -189,21 +198,21 @@ div.buy-search-like-menu a{
 	padding-bottom: 10px;
 }
 
-.purchases-bucket .img-container{
+.purchases-basket-background-layer .img-container{
 	height: 100px;
 	min-width: 150px;
 }
 
-.purchases-bucket .info-container{
+.purchases-basket-background-layer .info-container{
 	margin-top: 10px;
 }
 
-.purchases-bucket .item-name{
+.purchases-basket-background-layer .item-name{
 	margin: 0;
 	text-align: center;
 }
 
-.purchases-bucket .number-of-items>.container{
+.purchases-basket-background-layer .number-of-items>.container{
 	width: 100%;
     min-width: 0px;
     margin: 0;
@@ -219,15 +228,16 @@ div.buy-search-like-menu a{
     background-color: var(--main-bg-color);
 }
 
-.purchases-bucket .container input {
+.purchases-basket-background-layer .container input {
     width: calc(100% - 84px);
     height: 30px;
     text-align: center;
+	color: var(--main-font-color);
     margin: 0 12px;
     border: none;
     border-radius: 15px;
     background-color: var(--main-bg-color);
-    box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), inset 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 .remove{
@@ -236,21 +246,21 @@ div.buy-search-like-menu a{
     text-align: center;
     font-weight: 600;
     font-size: 1em;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
     border: none;
     border-radius: 10px;
     padding: 5px;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
     transition: 0.3s background-color;
 }
 
-.purchases-bucket .remove{
+.purchases-basket-background-layer .remove{
 	margin-top: 10px;
 	margin-left: 40px;
 }
 
-.purchases-bucket .price{
+.purchases-basket-background-layer .price{
 	margin-top: 30px;
     margin-bottom: 0;
     font-size: 1.5em;
@@ -260,11 +270,11 @@ div.buy-search-like-menu a{
 	line-height: 16px;
 }
 
-.purchases-bucket .price span{
+.purchases-basket-background-layer .price span{
 	font-size: 1em;
 }
 
-.purchases-bucket .buy-all{
+.purchases-basket-background-layer .buy-all{
 	width: 100%;
     max-width: 934px;
     font-size: 20px;
@@ -290,7 +300,7 @@ div.search i{
 	position: absolute;
 	top: 8px;
 	left: 9px;
-	color: #313131;
+	color:  var(--main-font-color);
 	transition: 0.2s color;
 }
 
@@ -298,12 +308,13 @@ div.search input{
 	width: 100%;
 	height: 30px;
 	font-size: 16px;
+	color: var(--main-font-color);
 	padding-left: 40px;
 	border: 4px solid var(--main-bg-color);
 	border-radius: 15px;
 	background-color: var(--main-bg-color);
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.search input.showing{
@@ -314,8 +325,8 @@ div.search input.showing{
 div.search input:focus{
 	border: none;
 	outline: none;
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
-				inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), 
+				inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.search:hover i, div.search input:focus+i{
@@ -335,7 +346,7 @@ div.search-result{
 	min-height: 30px;
 	overflow: hidden;
     border-radius: 15px;
-    background-color: #f6f6f6;
+    background-color: var(--search-results-bg-color);
 	text-align: left;
 	border-top-right-radius: 0px;
 	border-top-left-radius: 0px;
@@ -348,7 +359,7 @@ div.result a{
 }
 
 div.result a:hover{
-	background-color: white;
+	background-color: var(--search-result-hover-bg-color);
 	cursor: pointer;
 }
 
@@ -374,7 +385,7 @@ nav.main-nav a, nav.main-mobile-nav a{
 	text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
 	border: none;
     border-radius: 10px;
@@ -382,8 +393,8 @@ nav.main-nav a, nav.main-mobile-nav a{
     padding: 8px;
 	padding-left: 20px;
 	padding-right: 20px;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 .mobile-menu-container{
@@ -416,7 +427,7 @@ nav.main-nav a, nav.main-mobile-nav a{
 	margin: auto;
 	width: 86px;
 	border-radius: 15px;
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 .toggle-menu input{
@@ -435,7 +446,7 @@ nav.main-nav a, nav.main-mobile-nav a{
 	display: block;
 	height: 4px;
 	width: 100%;
-	background-color: #313131;
+	background-color:  var(--main-font-color);
 	transition: transform 0.3s;
 }
 
@@ -538,14 +549,14 @@ nav.goods-list a{
 	text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
 	border: none;
     border-radius: 10px;
     margin-bottom: 5px;
     padding: 8px;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 nav.goods-list ul.subgroup a{
@@ -564,11 +575,11 @@ nav.goods-list ul.subgroup a{
         -ms-user-select: none;
             user-select: none;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
     border: none;
     border-radius: 10px;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
     font-size: 0.8em;
     padding: 5px;
     margin: 5px 8px;
@@ -610,17 +621,17 @@ div.min input, div.max input{
 	border: none;
 	border-radius: 15px;
     background-color: var(--main-bg-color);
-    box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
-	inset 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), 
+	inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.min input:hover, div.max input:hover{
-	border: 1px solid #00adff69;
+	border: 1px solid var(--formElement-hover-border-color);
 }
 
 div.min input:focus, div.max input:focus{
-	border: 1px solid #00adff69;
-	background-color: #fefefe69;
+	border: 1px solid var(--formElement-hover-border-color);
+	background-color: var(--formElement-focus-bg-color);
 }
 
 button.apply{
@@ -628,7 +639,7 @@ button.apply{
     font-weight: 600;
     font-size: 0.9em;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
     border: none;
     border-radius: 15px;
@@ -638,7 +649,7 @@ button.apply{
     padding: 12px;
     padding-right: 5%;
     padding-left: 5%;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.items-area{
@@ -667,7 +678,7 @@ div.items-area{
 	text-align: center;
 	background-color: var(--main-bg-color);
 	border-radius: 15px;
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 #mainItems .item a{
@@ -690,7 +701,7 @@ div.items-area{
 	position: relative;
 	top: 40%;
 	opacity: 0;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
     border: none;
     border-radius: 3px;
@@ -754,7 +765,7 @@ div.item-info{
     font-weight: 600;
 	font-size: 0.9em;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
 	border: none;
     border-radius: 10px;
@@ -764,8 +775,8 @@ div.item-info{
     padding: 18px;
 	padding-right: 10%;
 	padding-left: 10%;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.recommendations{
@@ -794,7 +805,7 @@ div.recommendations div.container{
 }
 
 div.recommendations div.additional-styles, div.goods-list-container div.additional-styles{
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
     margin-right: 3%;
 	margin-left: 3%;
 	margin-bottom: 5%;
@@ -837,7 +848,7 @@ div.recommendations .item a:hover img{
 
 .main-footer{
 	min-height: 100px;
-	background-color: #dcdcdc;
+	background-color: var(--footer-bg-color);
 }
 
 /* effects */
@@ -849,8 +860,8 @@ button.apply:active,
 .toggle-menu:active,
 .back-home:active,
 .subgroup-filter:active{
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
-				inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), 
+				inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 .buy-this-item:hover, 
@@ -880,7 +891,7 @@ div.buy-window{
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #000000ad;
+	background-color: var(--modal-bg-color);
 }
 
 div.buy-window div.container{
@@ -931,8 +942,8 @@ div.buy-menu div.container input{
 	border: none;
 	border-radius: 15px;
 	background-color: var(--main-bg-color);
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
-				inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), 
+				inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 button.show-more{
@@ -947,13 +958,13 @@ button.plus, button.minus{
 	height: 30px;
 	text-align: center;
 	font-size: 1.7em;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
 	border: none;
     border-radius: 50%;
     padding: 0;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 
-				5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 
+				5px 5px 5px var(--darkPart-boxShadow-color);
 	transition: 0.3s background-color;
 }
 
@@ -966,8 +977,8 @@ button.plus:hover, button.minus:hover, button.remove:hover{
 }
 
 button.plus:active, button.minus:active, button.remove:active{
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), 
-				inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), 
+				inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 div.close{
@@ -1002,7 +1013,7 @@ span.xmark-part-1, span.xmark-part-2{
 	height: 2px;
     width: 20px;
     display: block;
-    background: #313131;
+    background:  var(--main-font-color);
 	position: absolute;
 }
 
@@ -1090,7 +1101,7 @@ div.no-overflow{
 }
 
 .contact-us-form input, .contact-us-form textarea{
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), inset 5px 5px 5px var(--darkPart-boxShadow-color);
 	background-color: var(--main-bg-color);
 	padding: 10px 15px;
 	margin: 15px 0;
@@ -1124,24 +1135,24 @@ div.no-overflow{
 }
 
 .contact-us-form input[type=submit]{
-	box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 	border: none;
 	cursor: pointer;
 	text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.6px;
-    color: #313131;
+    color:  var(--main-font-color);
 	text-align: center;
 }
 
 .contact-us-form input:hover, .contact-us-form textarea:hover{
-	border: 1px solid #00adff69;
+	border: 1px solid var(--formElement-hover-border-color);
 
 }
 
 .contact-us-form input:focus, .contact-us-form textarea:focus{
-	border: 1px solid #00adff69;
-	background-color: #fefefe69;
+	border: 1px solid var(--formElement-hover-border-color);
+	background-color: var(--formElement-focus-bg-color);
 }
 
 .contact-us-form input[type=submit]:hover{
@@ -1150,7 +1161,7 @@ div.no-overflow{
 }
 
 .contact-us-form input[type=submit]:active{
-	box-shadow: inset -4px -3px 5px rgb(255 255 255 / 55%), inset 5px 5px 5px rgb(69 69 69 / 12%);
+	box-shadow: inset -4px -3px 5px var(--lightPart-boxShadow-color), inset 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 /* all */
@@ -1182,12 +1193,12 @@ div.no-overflow{
 .back-home{
 	width: 30px;
 	height: 30px;
-    color: #313131;
+    color:  var(--main-font-color);
     cursor: pointer;
     border: none;
     border-radius: 10px;
     margin: 0;
-    box-shadow: -4px -3px 5px rgb(255 255 255 / 55%), 5px 5px 5px rgb(69 69 69 / 12%);
+    box-shadow: -4px -3px 5px var(--lightPart-boxShadow-color), 5px 5px 5px var(--darkPart-boxShadow-color);
 }
 
 .back-home i{
@@ -1324,16 +1335,16 @@ div.show{
 		text-align: center;
 	}
 
-	.purchases-bucket .item-container{
+	.purchases-basket-background-layer .item-container{
 		flex-direction: column;
 		align-items: center;
 	}
 
-	.purchases-bucket .remove{
+	.purchases-basket-background-layer .remove{
 		margin-left: 10px;
 	}
 
-	.purchases-bucket .button-container{
+	.purchases-basket-background-layer .button-container{
 		height: initial;
 	}
 }
@@ -1358,7 +1369,7 @@ div.show{
 }
 
 @media (max-width: 320px){
-	.purchases-bucket .price{
+	.purchases-basket-background-layer .price{
 		line-height: initial;
 	}
 }
