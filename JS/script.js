@@ -1,3 +1,5 @@
+"use strict";
+
 // ***Events
 document.addEventListener('click', onClick);
 document.addEventListener('scroll', onScroll);
@@ -48,7 +50,7 @@ function quad(timeFraction) {
 
 // ***Animations
 
-function animatedDelete(elemToDelete){
+function animatedDelete(elemToDelete){  //Попробовать избавиться от этой функции, заменив на css-анимацию
   if(!elemToDelete) return;
 
   elemToDelete.style.transform = `translateX(-${elemToDelete.clientWidth}px)`;
@@ -65,15 +67,15 @@ function animatedDelete(elemToDelete){
 // ***End of Animations
 
 // ***DOM interaction functions
-function animatedScroll(scrollToThisPos){
-	animate({
-	  duration: 1000,
-	  timing: quad,
-	  draw(progress) {
-	    scrollTo(0, window.pageYOffset - window.pageYOffset * progress + scrollToThisPos);
-	  }
-	});
-}
+// function animatedScroll(scrollToThisPos){
+// 	animate({
+// 	  duration: 1000,
+// 	  timing: quad,
+// 	  draw(progress) {
+// 	    scrollTo(0, window.pageYOffset - window.pageYOffset * progress + scrollToThisPos);
+// 	  }
+// 	});
+// }
 
 function addClassHere(target, className){
   if(target.classList.contains(className)) return;
@@ -114,7 +116,7 @@ function toggleClassAtThisPosition(str){
   }
 }
 
-function setNumberOfItems(e){
+function setNumberOfItems(e){ // вроде в HTML есть функционал для того, что делает эта функция. Попробовать заменить
   if(e.target.dataset.clickValueMinus){
     let str = e.target.dataset.clickValueMinus;
 
@@ -154,7 +156,7 @@ function clearInputValue(input){
   input.value = '';
 }
 
-function showElement(itemToShowId, whenThisElemNotOnScreen){
+function showElement(itemToShowId, whenThisElemNotOnScreen){ // попробовать заменить эту функцию на css position: sticky;
 
   let showThisElem = document.getElementById(itemToShowId);
 
@@ -223,7 +225,8 @@ function onClick(e){
     generateBuyMenu(obj);
   }
 
-  if(e.target.closest('#miniGalery')){
+  if(e.target.closest('#miniGalery')){ // этот функциона по-идее можно заменить на список из input radio:
+                                       // какой input выбран, тот и показываем
     e.preventDefault();
     let src;
     if(e.target.tagName == 'IMG'){
@@ -238,7 +241,7 @@ function onClick(e){
   }
   
   if(e.target.id === 'backToTopButton'){
-    animatedScroll(0);
+    //animatedScroll(0);
   }
 
   if(e.target.hasAttribute('data-click-delete')){
