@@ -18,65 +18,19 @@ let searchResultClone = document.getElementById('searchResult').cloneNode(true);
 let collectionOfItems = new Set();
 // ***eng of GLOBAL VARIABLES
 
-// ***Animation settings
-function animate({timing, draw, duration}, funcOnAnimationEnd) {
-
-  let start = performance.now();
-
-  requestAnimationFrame(function animate(time) {
-    let timeFraction = (time - start) / duration;
-    if (timeFraction > 1) timeFraction = 1;
-
-    let progress = timing(timeFraction);
-
-    draw(progress);
-
-    if (timeFraction < 1) {
-      requestAnimationFrame(animate);
-    }
-
-    if(progress == 1) {
-      if(funcOnAnimationEnd) funcOnAnimationEnd();
-    }
-
-  });
-
-}
-
-function quad(timeFraction) {
-  return Math.pow(timeFraction, 2);
-}
-// ***end of animation settings
-
 // ***Animations
-
-function animatedDelete(elemToDelete){  //Попробовать избавиться от этой функции, заменив на css-анимацию
+function animatedDelete(elemToDelete){  // Done
   if(!elemToDelete) return;
 
-  elemToDelete.style.transform = `translateX(-${elemToDelete.clientWidth}px)`;
-
-  animate({
-	  duration: 300,
-	  timing: quad,
-	  draw(progress) {
-      elemToDelete.style.transform = `translateX(-${elemToDelete.clientWidth * progress}px)`;
-      
-	  }
-	}, () => {elemToDelete.remove();});
+  let styles = getComputedStyle(elemToDelete);
+  let timeOfTransition = parseFloat(styles.transitionDuration) * 1000;
+  setTimeout(() => elemToDelete.remove(), timeOfTransition);
+  
+  elemToDelete.classList.add('delete-item');
 }
 // ***End of Animations
 
 // ***DOM interaction functions
-// function animatedScroll(scrollToThisPos){
-// 	animate({
-// 	  duration: 1000,
-// 	  timing: quad,
-// 	  draw(progress) {
-// 	    scrollTo(0, window.pageYOffset - window.pageYOffset * progress + scrollToThisPos);
-// 	  }
-// 	});
-// }
-
 function addClassHere(target, className){
   if(target.classList.contains(className)) return;
   target.classList.add(className);
@@ -116,7 +70,10 @@ function toggleClassAtThisPosition(str){
   }
 }
 
-function setNumberOfItems(e){ // вроде в HTML есть функционал для того, что делает эта функция. Попробовать заменить
+function setNumberOfItems(e){ // replace with next HTML+JS functionality:
+                              // <input type="button" id="a" value="1" onclick="x.value=parseInt(--x.value)">
+                              // <output name="x" for="a b">1</output>
+                              // <input type="button" id="b" value="1" onclick="x.value=parseInt(++x.value)">
   if(e.target.dataset.clickValueMinus){
     let str = e.target.dataset.clickValueMinus;
 
@@ -156,7 +113,7 @@ function clearInputValue(input){
   input.value = '';
 }
 
-function showElement(itemToShowId, whenThisElemNotOnScreen){ // попробовать заменить эту функцию на css position: sticky;
+function showElement(itemToShowId, whenThisElemNotOnScreen){ // Done
 
   let showThisElem = document.getElementById(itemToShowId);
 
@@ -238,10 +195,6 @@ function onClick(e){
     }
 
     changeImgSrc(src, document.getElementById('mainImg'));
-  }
-  
-  if(e.target.id === 'backToTopButton'){
-    //animatedScroll(0);
   }
 
   if(e.target.hasAttribute('data-click-delete')){

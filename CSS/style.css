@@ -190,6 +190,11 @@ div.buy-search-like-menu a{
     margin-left: auto;
     margin-right: auto;
 	border-radius: 10px;
+	transition: transform 0.3s;
+}
+
+.purchases-basket-background-layer .delete-item{
+	transform: translateX(-100.1%);
 }
 
 .purchases-basket-background-layer .item-container{
