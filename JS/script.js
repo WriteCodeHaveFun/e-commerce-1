@@ -1,9 +1,14 @@
 "use strict";
 
 // ***Events
+const pointerdownEventTargets = document.querySelectorAll('.set-number-of-items');
+pointerdownEventTargets.forEach(
+  e => e.addEventListener('pointerdown', onPointerDown)
+);
+
 document.addEventListener('click', onClick);
 document.addEventListener('scroll', onScroll);
-document.addEventListener('pointerdown', onPointerDown);
+
 window.addEventListener('unload', onUnload);
 
 let mainSearch = document.getElementById('mainSearch');
@@ -74,30 +79,21 @@ function setNumberOfItems(e){ // replace with next HTML+JS functionality:
                               // <input type="button" id="a" value="1" onclick="x.value=parseInt(--x.value)">
                               // <output name="x" for="a b">1</output>
                               // <input type="button" id="b" value="1" onclick="x.value=parseInt(++x.value)">
-  if(e.target.dataset.clickValueMinus){
-    let str = e.target.dataset.clickValueMinus;
+  let settings = Object.values(e.target.dataset)[0];
 
-    if(!~str.indexOf(' ')) return;
+  if(!~settings.indexOf(' ')) return;
 
-    let minusValue = str.slice(0, str.indexOf(' '));
-    let cssMarker = str.slice(str.indexOf(' ')+1);
-    let inputField = e.target.parentNode.querySelector('.' + cssMarker);
-    let currentValue = inputField.value;
-    let result = Number(currentValue) - Number(minusValue);
+  let value = settings.slice(0, settings.indexOf(' '));
+  let cssMarker = settings.slice(settings.indexOf(' ')+1);
+  let inputField = e.target.parentNode.querySelector('.' + cssMarker);
+  let currentValue = inputField.value;
 
-    if(result < 1) result = 1;
+  if (e.target.dataset.decreaseValue) {
+    let result = Number(currentValue) - Number(value);
+    if (result < 1) result = 1;
     inputField.value = result;
-  }else{
-    let str = e.target.dataset.clickValuePlus;
-
-    if(!~str.indexOf(' ')) return;
-
-    let plusValue = str.slice(0, str.indexOf(' '));
-    let cssMarker = str.slice(str.indexOf(' ')+1);
-    let inputField = e.target.parentNode.querySelector('.' + cssMarker);
-    let currentValue = inputField.value;
-    let result = Number(currentValue) + Number(plusValue);
-
+  } else {
+    let result = Number(currentValue) + Number(value);
     inputField.value = result;
   }
 }
@@ -208,18 +204,29 @@ function onClick(e){
 }
 
 function onPointerDown(e){
-  if(e.target.dataset.clickValueMinus || e.target.dataset.clickValuePlus){
-    setNumberOfItems(e);
-    let timerId1, timerId2;
-    let interval = function(){
-      timerId2 = setInterval(setNumberOfItems, 50, e);
-    }; 
-    timerId1 = setTimeout(interval, 500);
-    document.addEventListener('pointerup', () => {
-      clearInterval(timerId1);
-      clearInterval(timerId2);
-    });
-  }
+  if (!(e.target.dataset.decreaseValue || e.target.dataset.increaseValue)) return;
+  
+  let delayTimerId, intervalTimerId;
+
+  function intervalCallbacks(){
+    intervalTimerId = setInterval(setNumberOfItems, 50, e);
+  };
+  function delayedCallback(){
+    delayTimerId = setTimeout(intervalCallbacks, 500);
+  };
+  function setStopCondition(){
+    let handler = () => {
+      clearInterval(delayTimerId);
+      clearInterval(intervalTimerId);
+      document.removeEventListener('pointerup', handler);
+    }
+
+    document.addEventListener('pointerup', handler);
+  };
+
+  setNumberOfItems(e);
+  delayedCallback();
+  setStopCondition();
 }
 
 function onUnload(){
