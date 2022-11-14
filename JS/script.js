@@ -1,6 +1,13 @@
 "use strict";
 
-// ***Events
+// ***GLOBAL VARIABLES
+const MAX_PRICE = 999999;
+const MAX_ITEMS_SHOWN = 4;
+const mainSearch = document.getElementById('mainSearch');
+let collectionOfItems = new Set();
+// ***eng of GLOBAL VARIABLES
+
+// ***Events setting
 function setEventListeners(targetSelector, eventName, func) {
   const target = document.querySelectorAll(targetSelector);
   target.forEach(
@@ -14,7 +21,6 @@ setEventListeners('[data-click-remove-class-from]', 'click', removeClassFrom);
 setEventListeners('[data-click-toggle-class-to-this-neighbor]', 'click', toggleClassToThisNeighbor);
 setEventListeners('[data-click-toggle-class-at-this-position]', 'click', toggleClassAtThisPosition);
 
-const mainSearch = document.getElementById('mainSearch');
 mainSearch.addEventListener('input', onInputChange);
 mainSearch.addEventListener('focus', onInputFocus);
 
@@ -22,13 +28,8 @@ document.addEventListener('click', onClick);
 document.addEventListener('scroll', onScroll);
 
 window.addEventListener('unload', onUnload);
-// ***end of Events
+// ***end of Events setting
 
-// ***GLOBAL VARIABLES
-const MAX_PRICE = 999999;
-const MAX_ITEMS_SHOWN = 4;
-let collectionOfItems = new Set();
-// ***eng of GLOBAL VARIABLES
 
 // ***Animations
 function animatedDelete(elemToDelete){  // Done
@@ -48,8 +49,8 @@ function addClassTo(e){
   if (settings.indexOf(' ') == -1) return;
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
-  let addTo = settings.slice(settings.indexOf(' ')+1);
-  document.querySelector('.' + addTo).classList.add(cssClass);
+  let selector = settings.slice(settings.indexOf(' ')+1);
+  document.querySelector('.' + selector).classList.add(cssClass);
 
   e.preventDefault();
 }
@@ -59,8 +60,8 @@ function removeClassFrom(e){
   if (settings.indexOf(' ') == -1) return;
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
-  let removeFrom = settings.slice(settings.indexOf(' ')+1);
-  document.querySelector('.' + removeFrom).classList.remove(cssClass);
+  let selector = settings.slice(settings.indexOf(' ')+1);
+  document.querySelector('.' + selector).classList.remove(cssClass);
 
   e.preventDefault();
 }
@@ -71,8 +72,8 @@ function toggleClassToThisNeighbor(e){
   if(settings.indexOf(' ') == -1) return;
   
   let cssClass = settings.slice(0, settings.indexOf(' '));
-  let toggleTo = settings.slice(settings.indexOf(' ')+1);
-  target.parentNode.querySelector('.' + toggleTo).classList.toggle(cssClass);
+  let selector = settings.slice(settings.indexOf(' ')+1);
+  target.parentNode.querySelector('.' + selector).classList.toggle(cssClass);
 
   e.preventDefault();
 }
@@ -82,9 +83,9 @@ function toggleClassAtThisPosition(e){
   if(settings.indexOf(' ') == -1) return;
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
-  let toggleTo = settings.slice(settings.indexOf(' ')+1);
-  if(document.querySelector(toggleTo)){
-    document.querySelector(toggleTo).classList.toggle(cssClass);
+  let selector = settings.slice(settings.indexOf(' ')+1);
+  if(document.querySelector(selector)){
+    document.querySelector(selector).classList.toggle(cssClass);
   }
 }
 
@@ -96,8 +97,8 @@ function setNumberOfItems(e){ // Done
   }
 
   let value = settings.slice(0, settings.indexOf(' '));
-  let cssMarker = settings.slice(settings.indexOf(' ')+1);
-  let inputField = e.target.parentNode.querySelector('.' + cssMarker);
+  let selector = settings.slice(settings.indexOf(' ')+1);
+  let inputField = e.target.parentNode.querySelector('.' + selector);
   let currentValue = inputField.value;
 
   if (e.target.dataset.decreaseValue) {
