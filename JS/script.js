@@ -1,10 +1,18 @@
 "use strict";
 
 // ***Events
-const pointerdownEventTargets = document.querySelectorAll('.set-number-of-items');
-pointerdownEventTargets.forEach(
-  e => e.addEventListener('pointerdown', onPointerDown)
-);
+function setEventListeners(targetSelector, eventName, func) {
+  const target = document.querySelectorAll(targetSelector);
+  target.forEach(
+    e => e.addEventListener(eventName, func)
+  );
+}
+
+setEventListeners('.set-number-of-items', 'pointerdown', onPointerDown);
+setEventListeners('[data-click-add-class-to]', 'click', addClassTo);
+setEventListeners('[data-click-remove-class-from]', 'click', removeClassFrom);
+setEventListeners('[data-click-toggle-class-to-this-neighbor]', 'click', toggleClassToThisNeighbor);
+setEventListeners('[data-click-toggle-class-at-this-position]', 'click', toggleClassAtThisPosition);
 
 const mainSearch = document.getElementById('mainSearch');
 mainSearch.addEventListener('input', onInputChange);
@@ -35,40 +43,46 @@ function animatedDelete(elemToDelete){  // Done
 // ***End of Animations
 
 // ***DOM interaction functions
-function addClassHere(target, className){
-  if(target.classList.contains(className)) return;
-  target.classList.add(className);
-}
+function addClassTo(e){
+  let settings = e.target.dataset.clickAddClassTo;
+  if (settings.indexOf(' ') == -1) return;
 
-function toggleClassHere(target, className){
-  target.classList.toggle(className);
-}
-
-function addClassTo(str){
-  if(str.indexOf(' ') == -1) return;
-  let cssClass = str.slice(0, str.indexOf(' '));
-  let addTo = str.slice(str.indexOf(' ')+1);
+  let cssClass = settings.slice(0, settings.indexOf(' '));
+  let addTo = settings.slice(settings.indexOf(' ')+1);
   document.querySelector('.' + addTo).classList.add(cssClass);
+
+  e.preventDefault();
 }
 
-function removeClassFrom(str){
-  if(str.indexOf(' ') == -1) return;
-  let cssClass = str.slice(0, str.indexOf(' '));
-  let removeFrom = str.slice(str.indexOf(' ')+1);
+function removeClassFrom(e){
+  let settings = e.target.dataset.clickRemoveClassFrom;
+  if (settings.indexOf(' ') == -1) return;
+
+  let cssClass = settings.slice(0, settings.indexOf(' '));
+  let removeFrom = settings.slice(settings.indexOf(' ')+1);
   document.querySelector('.' + removeFrom).classList.remove(cssClass);
+
+  e.preventDefault();
 }
 
-function toggleClassToThisNeighbor(target, str){
-  if(str.indexOf(' ') == -1) return;
-  let cssClass = str.slice(0, str.indexOf(' '));
-  let toggleTo = str.slice(str.indexOf(' ')+1);
+function toggleClassToThisNeighbor(e){
+  let target = e.target;
+  let settings = e.target.dataset.clickToggleClassToThisNeighbor
+  if(settings.indexOf(' ') == -1) return;
+  
+  let cssClass = settings.slice(0, settings.indexOf(' '));
+  let toggleTo = settings.slice(settings.indexOf(' ')+1);
   target.parentNode.querySelector('.' + toggleTo).classList.toggle(cssClass);
+
+  e.preventDefault();
 }
 
-function toggleClassAtThisPosition(str){
-  if(str.indexOf(' ') == -1) return;
-  let cssClass = str.slice(0, str.indexOf(' '));
-  let toggleTo = str.slice(str.indexOf(' ')+1);
+function toggleClassAtThisPosition(e){
+  let settings = e.target.dataset.clickToggleClassAtThisPosition
+  if(settings.indexOf(' ') == -1) return;
+
+  let cssClass = settings.slice(0, settings.indexOf(' '));
+  let toggleTo = settings.slice(settings.indexOf(' ')+1);
   if(document.querySelector(toggleTo)){
     document.querySelector(toggleTo).classList.toggle(cssClass);
   }
@@ -141,48 +155,21 @@ function onScroll(){
   showElement('backToTop', document.getElementById('mainHeader'));
 }
 
-function onClick(e){
-
-  if(e.target.dataset.clickAddClass){
-    addClassHere(e.target, e.target.dataset.clickAddClass);
-    e.preventDefault();
-  } 
-
-  if(e.target.dataset.clickToggleClass){
-    toggleClassHere(e.target, e.target.dataset.clickToggleClass);
-    e.preventDefault();
-  } 
-
-  if(e.target.dataset.clickAddClassTo){
-    addClassTo(e.target.dataset.clickAddClassTo);
-    e.preventDefault();
-  } 
-  if(e.target.dataset.clickRemoveClassFrom){
-    removeClassFrom(e.target.dataset.clickRemoveClassFrom);
-    e.preventDefault();
-  } 
-  if(e.target.dataset.clickToggleClassToThisNeighbor){
-    toggleClassToThisNeighbor(e.target, e.target.dataset.clickToggleClassToThisNeighbor);
-    e.preventDefault();
-  }
-  if(e.target.dataset.clickToggleClassAtThisPosition){
-    toggleClassAtThisPosition(e.target.dataset.clickToggleClassAtThisPosition);
-  }
-  
+function onClick(e){  
   if(e.target.dataset.itemId){
     let id = Number(e.target.dataset.itemId);
-    let obj = findObjById(id, collectionOfItems);
-    generateBuyMenu(obj);
+    let item = findItemById(id, collectionOfItems);
+    generateBuyMenu(item);
   }
 
   if(e.target.closest('#miniGalery')){ // этот функциона по-идее можно заменить на список из input radio:
                                        // какой input выбран, тот и показываем
     e.preventDefault();
     let src;
-    if(e.target.tagName == 'IMG'){
+    if (e.target.tagName == 'IMG') {
       let img = e.target;
       src = img.getAttribute('src') || '';
-    }else{
+    } else {
       let img = e.target.querySelector('img');
       src = img.getAttribute('src') || '';
     }
@@ -270,23 +257,23 @@ function isOnScreen(elem){
 // ***end of CHECK functions
 
 // ***other functions
-function findObjById(id, collection){
+function findItemById(id, collection){
   for(let obj of collection){
     if(id == obj.id) return obj;
   }
   return null;
 }
 
-function generateBuyMenu(obj){ 
-  if(!obj){
+function generateBuyMenu(item){ 
+  if(!item){
     generateErrorMessage();
     return;
   }
   let itemName = document.querySelector(`[data-template-field='item-name']`);
   let img = document.querySelector(`[data-template-field='img']`);
   let errorMessage = 'failed to get item name';
-  itemName.innerHTML = obj.itemName || errorMessage;
-  img.setAttribute('src', obj.imgSrc || '');
+  itemName.innerHTML = item.itemName || errorMessage;
+  img.setAttribute('src', item.imgSrc || '');
 }
 
 function generateErrorMessage(){
