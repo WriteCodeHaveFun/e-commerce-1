@@ -6,20 +6,19 @@ pointerdownEventTargets.forEach(
   e => e.addEventListener('pointerdown', onPointerDown)
 );
 
+const mainSearch = document.getElementById('mainSearch');
+mainSearch.addEventListener('input', onInputChange);
+mainSearch.addEventListener('focus', onInputFocus);
+
 document.addEventListener('click', onClick);
 document.addEventListener('scroll', onScroll);
 
 window.addEventListener('unload', onUnload);
-
-let mainSearch = document.getElementById('mainSearch');
-mainSearch.addEventListener('input', onInputChange);
-mainSearch.addEventListener('focus', onInputFocus);
 // ***end of Events
 
 // ***GLOBAL VARIABLES
 const MAX_PRICE = 999999;
 const MAX_ITEMS_SHOWN = 4;
-let searchResultClone = document.getElementById('searchResult').cloneNode(true);
 let collectionOfItems = new Set();
 // ***eng of GLOBAL VARIABLES
 
@@ -46,28 +45,28 @@ function toggleClassHere(target, className){
 }
 
 function addClassTo(str){
-  if(!~str.indexOf(' ')) return;
+  if(str.indexOf(' ') == -1) return;
   let cssClass = str.slice(0, str.indexOf(' '));
   let addTo = str.slice(str.indexOf(' ')+1);
   document.querySelector('.' + addTo).classList.add(cssClass);
 }
 
 function removeClassFrom(str){
-  if(!~str.indexOf(' ')) return;
+  if(str.indexOf(' ') == -1) return;
   let cssClass = str.slice(0, str.indexOf(' '));
   let removeFrom = str.slice(str.indexOf(' ')+1);
   document.querySelector('.' + removeFrom).classList.remove(cssClass);
 }
 
 function toggleClassToThisNeighbor(target, str){
-  if(!~str.indexOf(' ')) return;
+  if(str.indexOf(' ') == -1) return;
   let cssClass = str.slice(0, str.indexOf(' '));
   let toggleTo = str.slice(str.indexOf(' ')+1);
   target.parentNode.querySelector('.' + toggleTo).classList.toggle(cssClass);
 }
 
 function toggleClassAtThisPosition(str){
-  if(!~str.indexOf(' ')) return;
+  if(str.indexOf(' ') == -1) return;
   let cssClass = str.slice(0, str.indexOf(' '));
   let toggleTo = str.slice(str.indexOf(' ')+1);
   if(document.querySelector(toggleTo)){
@@ -75,13 +74,12 @@ function toggleClassAtThisPosition(str){
   }
 }
 
-function setNumberOfItems(e){ // replace with next HTML+JS functionality:
-                              // <input type="button" id="a" value="1" onclick="x.value=parseInt(--x.value)">
-                              // <output name="x" for="a b">1</output>
-                              // <input type="button" id="b" value="1" onclick="x.value=parseInt(++x.value)">
+function setNumberOfItems(e){ // Done
   let settings = Object.values(e.target.dataset)[0];
 
-  if(!~settings.indexOf(' ')) return;
+  if (settings.indexOf(' ') == -1) {
+    throw new SyntaxError(`invalid setting string: should look like 'value target'`);
+  }
 
   let value = settings.slice(0, settings.indexOf(' '));
   let cssMarker = settings.slice(settings.indexOf(' ')+1);
@@ -109,8 +107,7 @@ function clearInputValue(input){
   input.value = '';
 }
 
-function showElement(itemToShowId, whenThisElemNotOnScreen){ // Done
-
+function showElement(itemToShowId, whenThisElemNotOnScreen){ // try to use IntersectionObserver
   let showThisElem = document.getElementById(itemToShowId);
 
   function hideEleme(){
@@ -118,18 +115,18 @@ function showElement(itemToShowId, whenThisElemNotOnScreen){ // Done
     showThisElem.removeEventListener('transitionend', hideEleme);
   }
 
-  if(!isOnScreen(whenThisElemNotOnScreen)){
+  if (!isOnScreen(whenThisElemNotOnScreen)) {
 
-    if(showThisElem.dataset.status == `show`) return;
+    if (showThisElem.dataset.status == `show`) return;
 
     showThisElem.classList.add('animated-appearance');
     showThisElem.classList.remove('negative-z-index');
     showThisElem.removeEventListener('transitionend', hideEleme);
 
     showThisElem.dataset.status = `show`;
-  } else{
+  } else {
 
-    if(showThisElem.dataset.status == `hide`) return;
+    if (showThisElem.dataset.status == `hide`) return;
 
     showThisElem.classList.remove('animated-appearance');
     showThisElem.addEventListener('transitionend', hideEleme);
@@ -204,8 +201,6 @@ function onClick(e){
 }
 
 function onPointerDown(e){
-  if (!(e.target.dataset.decreaseValue || e.target.dataset.increaseValue)) return;
-  
   let delayTimerId, intervalTimerId;
 
   function intervalCallbacks(){
@@ -234,31 +229,35 @@ function onUnload(){
   clearInputValue(document.getElementById('mainSearch'));
 }
 
-function onInputFocus(){
-  if(this.value.length != 0){
-    this.classList.add('showing');
+function onInputFocus(e){
+  let input = e.target;
+  if (input.value.length != 0) {
+    input.classList.add('showing');
   }
 }
 
-function onInputChange(){
-
-  if(this.value.length != 0){
-    this.classList.add('showing');
-  }
+function onInputChange(e){
+  let input = e.target;
   let searchResultField = document.getElementById('searchResult');
+  let searchResultFieldClone = searchResultField.cloneNode(true);
+  let divTamplate = searchResultFieldClone.firstElementChild.cloneNode(true);
+  let maxResults = 10;
+
+  if (input.value.length != 0) {
+    input.classList.add('showing');
+  } else {
+    input.classList.remove('showing');
+  }
 
   searchResultField.innerHTML = ` `;
 
-  if(this.value.length == 0) return;
+  if (input.value.length == 0) maxResults = 1;
 
-  let input = this;
-  for(let i = 0; i < 10; i++){
-          let div = document.createElement('div');
-          div = searchResultClone.firstElementChild.cloneNode(true);
-          let markers = div.querySelectorAll('[data-marker]');
-          for(let j = 0; j < markers.length; j++){
-            markers[j].innerHTML = input[markers[j].dataset.marker];
-          }
+  for (let i = 0; i < maxResults; i++) {
+    let div = document.createElement('div');
+    div = divTamplate.cloneNode(true);
+    let resultContainingTag = div.querySelector('[data-marker]');
+    resultContainingTag.innerHTML = input[resultContainingTag.dataset.marker];
     searchResultField.append(div);
   }
 }
