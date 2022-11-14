@@ -123,6 +123,7 @@ function clearInputValue(input){
 }
 
 function showElement(itemToShowId, whenThisElemNotOnScreen){ // try to use IntersectionObserver
+                                                             // this func do 2 things instead of 1
   let showThisElem = document.getElementById(itemToShowId);
 
   function hideEleme(){
@@ -231,6 +232,14 @@ function onInputChange(e){
   let divTamplate = searchResultFieldClone.firstElementChild.cloneNode(true);
   let maxResults = 10;
 
+  function appendResult() {
+    let div = document.createElement('div');
+    div = divTamplate.cloneNode(true);
+    let resultContainingTag = div.querySelector('[data-marker]');
+    resultContainingTag.innerHTML = input[resultContainingTag.dataset.marker];
+    searchResultField.append(div);
+  };
+
   if (input.value.length != 0) {
     input.classList.add('showing');
   } else {
@@ -242,11 +251,7 @@ function onInputChange(e){
   if (input.value.length == 0) maxResults = 1;
 
   for (let i = 0; i < maxResults; i++) {
-    let div = document.createElement('div');
-    div = divTamplate.cloneNode(true);
-    let resultContainingTag = div.querySelector('[data-marker]');
-    resultContainingTag.innerHTML = input[resultContainingTag.dataset.marker];
-    searchResultField.append(div);
+    appendResult();
   }
 }
 // ***end of EVENT funcitons
