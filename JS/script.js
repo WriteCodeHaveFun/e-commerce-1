@@ -20,6 +20,9 @@ setEventListeners('[data-click-add-class-to]', 'click', addClassTo);
 setEventListeners('[data-click-remove-class-from]', 'click', removeClassFrom);
 setEventListeners('[data-click-toggle-class-to-this-neighbor]', 'click', toggleClassToThisNeighbor);
 setEventListeners('[data-click-toggle-class-at-this-position]', 'click', toggleClassAtThisPosition);
+setEventListeners('[data-item-id]', 'click', generateBuyMenuByItemId);
+setEventListeners('[data-click-delete]', 'click', deleteNode);
+setEventListeners('#miniGalery', 'click', imgSwitcher);
 
 mainSearch.addEventListener('input', onInputChange);
 mainSearch.addEventListener('focus', onInputFocus);
@@ -32,21 +35,21 @@ window.addEventListener('unload', onUnload);
 
 
 // ***Animations
-function animatedDelete(elemToDelete){  // Done
-  if(!elemToDelete) return;
+function animatedDelete(elemToDelete){
+  if (!elemToDelete) throw SyntaxError('removal item is not found. It should have a "data-delete-marker" attr in');
+
+  elemToDelete.classList.add('delete-item');
 
   let styles = getComputedStyle(elemToDelete);
-  let timeOfTransition = parseFloat(styles.transitionDuration) * 1000;
-  setTimeout(() => elemToDelete.remove(), timeOfTransition);
-  
-  elemToDelete.classList.add('delete-item');
+  let delayMs = parseFloat(styles.transitionDuration) * 1000;
+  setTimeout(() => elemToDelete.remove(), delayMs);
 }
 // ***End of Animations
 
 // ***DOM interaction functions
 function addClassTo(e){
   let settings = e.target.dataset.clickAddClassTo;
-  if (settings.indexOf(' ') == -1) return;
+  if (settings.indexOf(' ') == -1) generateInvalidSettingError();
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
   let selector = settings.slice(settings.indexOf(' ')+1);
@@ -57,7 +60,7 @@ function addClassTo(e){
 
 function removeClassFrom(e){
   let settings = e.target.dataset.clickRemoveClassFrom;
-  if (settings.indexOf(' ') == -1) return;
+  if (settings.indexOf(' ') == -1) generateInvalidSettingError();
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
   let selector = settings.slice(settings.indexOf(' ')+1);
@@ -69,7 +72,7 @@ function removeClassFrom(e){
 function toggleClassToThisNeighbor(e){
   let target = e.target;
   let settings = e.target.dataset.clickToggleClassToThisNeighbor
-  if(settings.indexOf(' ') == -1) return;
+  if (settings.indexOf(' ') == -1) generateInvalidSettingError();
   
   let cssClass = settings.slice(0, settings.indexOf(' '));
   let selector = settings.slice(settings.indexOf(' ')+1);
@@ -80,7 +83,7 @@ function toggleClassToThisNeighbor(e){
 
 function toggleClassAtThisPosition(e){
   let settings = e.target.dataset.clickToggleClassAtThisPosition
-  if(settings.indexOf(' ') == -1) return;
+  if (settings.indexOf(' ') == -1) generateInvalidSettingError();
 
   let cssClass = settings.slice(0, settings.indexOf(' '));
   let selector = settings.slice(settings.indexOf(' ')+1);
@@ -89,12 +92,35 @@ function toggleClassAtThisPosition(e){
   }
 }
 
-function setNumberOfItems(e){ // Done
+function generateBuyMenuByItemId(e){
+  let id = Number(e.target.dataset.itemId);
+  let item = findItemById(id, collectionOfItems);
+  generateBuyMenu(item);
+}
+
+function deleteNode(e){
+  let nodeToDelete = e.target.closest(`[data-delete-marker]`);
+  animatedDelete(nodeToDelete);
+}
+
+function imgSwitcher(e){ 
+  let src;
+  if (e.target.tagName == 'IMG') {
+    let img = e.target;
+    src = img.getAttribute('src') || '';
+  } else {
+    let img = e.target.querySelector('img');
+    src = img.getAttribute('src') || '';
+  }
+
+  changeImgSrc(src, document.getElementById('mainImg'));
+  e.preventDefault();
+}
+
+function setNumberOfItems(e){
   let settings = Object.values(e.target.dataset)[0];
 
-  if (settings.indexOf(' ') == -1) {
-    throw new SyntaxError(`invalid setting string: should look like 'value target'`);
-  }
+  if (settings.indexOf(' ') == -1) generateInvalidSettingError();
 
   let value = settings.slice(0, settings.indexOf(' '));
   let selector = settings.slice(settings.indexOf(' ')+1);
@@ -113,7 +139,7 @@ function setNumberOfItems(e){ // Done
 
 function clearInputCheckboxes(){
   let inputs = document.querySelectorAll('input[type=checkbox]');
-  for(let i = 0; i < inputs.length; i++){
+  for (let i = 0; i < inputs.length; i++) {
     inputs[i].checked = false;
   }
 }
@@ -158,33 +184,9 @@ function onScroll(){
 }
 
 function onClick(e){  
-  if(e.target.dataset.itemId){
-    let id = Number(e.target.dataset.itemId);
-    let item = findItemById(id, collectionOfItems);
-    generateBuyMenu(item);
-  }
-
-  if(e.target.closest('#miniGalery')){ // этот функциона по-идее можно заменить на список из input radio:
-                                       // какой input выбран, тот и показываем
-    e.preventDefault();
-    let src;
-    if (e.target.tagName == 'IMG') {
-      let img = e.target;
-      src = img.getAttribute('src') || '';
-    } else {
-      let img = e.target.querySelector('img');
-      src = img.getAttribute('src') || '';
-    }
-
-    changeImgSrc(src, document.getElementById('mainImg'));
-  }
-
-  if(e.target.hasAttribute('data-click-delete')){
-    let nodeToDelete = e.target.closest(`[data-delete-marker]`);
-      animatedDelete(nodeToDelete);
-  }
-
-  if(e.target != document.getElementById('mainSearch') && e.target != document.getElementById('searchResult')){
+  let isMainSearchNotTargeted = e.target !== document.getElementById('mainSearch');
+  let isSearchResultNotTargeted = e.target !== document.getElementById('searchResult')
+  if (isMainSearchNotTargeted && isSearchResultNotTargeted) {
     document.getElementById('mainSearch').classList.remove('showing');
   }
 }
@@ -264,17 +266,16 @@ function isOnScreen(elem){
 
 // ***other functions
 function findItemById(id, collection){
-  for(let obj of collection){
+  for (let obj of collection) {
     if(id == obj.id) return obj;
   }
   return null;
 }
 
 function generateBuyMenu(item){ 
-  if(!item){
-    generateErrorMessage();
-    return;
-  }
+  // DON'T REMOVE - WORK IN PROGRESS
+  // if (!item) generateErrorMessage();
+
   let itemName = document.querySelector(`[data-template-field='item-name']`);
   let img = document.querySelector(`[data-template-field='img']`);
   let errorMessage = 'failed to get item name';
@@ -283,7 +284,11 @@ function generateBuyMenu(item){
 }
 
 function generateErrorMessage(){
-  console.log('error');
+  throw Error('item is not found. Reload the page and try again')
+}
+
+function generateInvalidSettingError() {
+  throw new SyntaxError(`invalid setting string: should look like 'value target'`);
 }
 
 function changeImgSrc(newSrc, elemToChange){
