@@ -275,6 +275,7 @@ function findItemById(id, collection){
 function generateBuyMenu(item){ 
   // DON'T REMOVE - WORK IN PROGRESS
   // if (!item) generateErrorMessage();
+  if (!item) return; // temporary code
 
   let itemName = document.querySelector(`[data-template-field='item-name']`);
   let img = document.querySelector(`[data-template-field='img']`);
