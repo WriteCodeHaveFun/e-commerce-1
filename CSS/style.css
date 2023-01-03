@@ -156,6 +156,7 @@ div.buy-search-like-menu{
 
 div.buy-search-like-menu a>div{
 	float: right;
+	pointer-events: none;
 }
 
 div.buy-search-like-menu a{

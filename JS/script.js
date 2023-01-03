@@ -184,10 +184,14 @@ function onScroll(){
 }
 
 function onClick(e){  
-  let isMainSearchNotTargeted = e.target !== document.getElementById('mainSearch');
-  let isSearchResultNotTargeted = e.target !== document.getElementById('searchResult')
-  if (isMainSearchNotTargeted && isSearchResultNotTargeted) {
-    document.getElementById('mainSearch').classList.remove('showing');
+  let searchResult = document.getElementById('searchResult');
+  let mainSearchField = document.getElementById('mainSearch');
+  function shouldCloseSearchResults(){
+    return e.target !== mainSearchField && e.target !== searchResult;
+  };
+
+  if (shouldCloseSearchResults()) {
+    mainSearchField.classList.remove('showing');
   }
 }
 
@@ -274,7 +278,7 @@ function findItemById(id, collection){
 
 function generateBuyMenu(item){ 
   // DON'T REMOVE - WORK IN PROGRESS
-  // if (!item) generateErrorMessage();
+  // if (!item) generateItemNotFoundErrorMessage();
   if (!item) return; // temporary code
 
   let itemName = document.querySelector(`[data-template-field='item-name']`);
@@ -284,8 +288,8 @@ function generateBuyMenu(item){
   img.setAttribute('src', item.imgSrc || '');
 }
 
-function generateErrorMessage(){
-  throw Error('item is not found. Reload the page and try again')
+function generateItemNotFoundErrorMessage(){
+  throw Error('item is not found. Reload the page and try again');
 }
 
 function generateInvalidSettingError() {
